@@ -605,5 +605,4 @@ jQuery(document).ready(function($) {
             }
         }
     }
-
 });

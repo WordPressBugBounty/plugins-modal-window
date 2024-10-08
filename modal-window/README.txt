@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 6.1
+Stable tag: 6.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,9 @@ To solve this problem:
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+= 6.1.1 =
+* Fixed: minor bugs with escaping
+
 = 6.1 =
 * Added: Control the display of the plugin in the dashboard based on users' roles
 

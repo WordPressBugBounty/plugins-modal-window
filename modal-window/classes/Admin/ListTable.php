@@ -26,10 +26,12 @@ class ListTable extends WP_List_Table {
 	public function search_box( $text, $input_id ) {
 		$input_id .= '-search-input';
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			echo '<input type="hidden" name="orderby" value="' . esc_attr( sanitize_text_field( $_REQUEST['orderby'] ) ) . '" />';
+			$orderby = sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) );
+			echo '<input type="hidden" name="orderby" value="' . esc_attr( $orderby ) . '" />';
 		}
 		if ( ! empty( $_REQUEST['order'] ) ) {
-			echo '<input type="hidden" name="order" value="' . esc_attr( sanitize_text_field( $_REQUEST['order'] ) ) . '" />';
+			$order = sanitize_text_field( wp_unslash( $_REQUEST['order'] ) );
+			echo '<input type="hidden" name="order" value="' . esc_attr( $order ) . '" />';
 		}
 		?>
         <p class="search-box">
@@ -47,22 +49,22 @@ class ListTable extends WP_List_Table {
 	}
 
 	public function column_title( $item ): string {
-		$title   = ! empty( $item['title'] ) ? $item['title'] : __( 'Untitled', 'modal-window' );
+		$title   = ! empty( $item['title'] ) ? $item['title'] : __( 'Untitled', 'side-menu-lite' );
 		$param   = DBManager::get_param_id( $item['ID'] );
 		$actions = [
 			'id'        => '#' . $item['ID'],
 			'edit'      => '<a href="' . esc_url( Link::edit( $item['ID'] ) ) . '">' . esc_html__( 'Edit',
-					'modal-window' ) . '</a>',
+					'side-menu-lite' ) . '</a>',
 			'duplicate' => '<a href="' . esc_url( Link::duplicate( $item['ID'] ) ) . '">' . esc_html__( 'Duplicate',
-					'modal-window' ) . '</a>',
+					'side-menu-lite' ) . '</a>',
 			'delete'    => '<a href="' . esc_url( Link::remove( $item['ID'] ) ) . '" >' . esc_html__( 'Delete',
-					'modal-window' ) . '</a>',
+					'side-menu-lite' ) . '</a>',
 			'export'    => '<a href="' . esc_url( Link::export( $item['ID'] ) ) . '" >' . esc_html__( 'Export',
-					'modal-window' ) . '</a>',
+					'side-menu-lite' ) . '</a>',
 		];
 		if ( ! empty( $param['link'] ) ) {
 			$actions['view'] = '<a href="' . esc_url( $param['link'] ) . '" target="_blank">' . esc_html__( 'View',
-					'modal-window' ) . '</a>';
+					'side-menu-lite' ) . '</a>';
 		}
 
 
@@ -93,15 +95,15 @@ class ListTable extends WP_List_Table {
 	public function get_columns(): array {
 		return [
 			'cb'     => '<input type="checkbox" />',
-			'title'  => __( 'Title', 'modal-window' ),
-			'code'  => __( 'Shortcode', 'modal-window' ),
-			'tag'    => __( 'Tag', 'modal-window' ),
+			'title'  => __( 'Title', 'side-menu-lite' ),
+			'code'   => __( 'Shortcode', 'side-menu-lite' ),
+			'tag'    => __( 'Tag', 'side-menu-lite' ),
 			'mode'   => __( 'Test mode',
-					'modal-window' ) . '<sup class="has-tooltip" data-tooltip="' . __( 'The item will only be displayed for administrators.',
-					'modal-window' ) . '">ℹ</sup>',
+					'side-menu-lite' ) . '<sup class="has-tooltip" data-tooltip="' . __( 'The item will only be displayed for administrators.',
+					'side-menu-lite' ) . '">ℹ</sup>',
 			'status' => __( 'Status',
-					'modal-window' ) . '<sup class="has-tooltip" data-tooltip="' . __( 'Display item on the Frontend.',
-					'modal-window' ) . '">ℹ</sup>',
+					'side-menu-lite' ) . '<sup class="has-tooltip" data-tooltip="' . __( 'Display item on the Frontend.',
+					'side-menu-lite' ) . '">ℹ</sup>',
 		];
 	}
 
@@ -135,22 +137,22 @@ class ListTable extends WP_List_Table {
 			'action' => 'update'
 		], admin_url( 'admin.php' ) );
 		foreach ( $result as $key => $value ) {
-			$title       = ! empty( $value->title ) ? $value->title : __( 'UnTitle', 'modal-window' );
-			$tooltip_off = esc_attr__( 'Click for Deactivate.', 'modal-window' );
-			$tooltip_on  = esc_attr__( 'Click for Activate.', 'modal-window' );
+			$title       = ! empty( $value->title ) ? $value->title : __( 'UnTitle', 'side-menu-lite' );
+			$tooltip_off = esc_attr__( 'Click for Deactivate.', 'side-menu-lite' );
+			$tooltip_on  = esc_attr__( 'Click for Activate.', 'side-menu-lite' );
 			$status_off  = '<a href="' . esc_url( Link::activate_url( $value->id ) ) . '" class="wpie-toogle is-off" data-tooltip="' . esc_attr( $tooltip_on ) . '"><span>' . esc_attr__( 'OFF',
-					'modal-window' ) . '</span></a>';
+					'side-menu-lite' ) . '</span></a>';
 			$status_on   = '<a href="' . esc_url( Link::deactivate_url( $value->id ) ) . '" class="wpie-toogle is-on" data-tooltip="' . esc_attr( $tooltip_off ) . '"><span>' . esc_attr__( 'ON',
-					'modal-window' ) . '</span></a>';
+					'side-menu-lite' ) . '</span></a>';
 			$status      = ! empty( $value->status ) ? $status_off : $status_on;
 
-			$mode_tooltip_off = esc_attr__( 'Click for OFF.', 'modal-window' );
-			$mode_tooltip_on  = esc_attr__( 'Click for ON.', 'modal-window' );
+			$mode_tooltip_off = esc_attr__( 'Click for OFF.', 'side-menu-lite' );
+			$mode_tooltip_on  = esc_attr__( 'Click for ON.', 'side-menu-lite' );
 
 			$mode_off = '<a href="' . esc_url( Link::activate_mode( $value->id ) ) . '" class="wpie-toogle is-off" data-tooltip="' . esc_attr( $mode_tooltip_on ) . '"><span>' . esc_attr__( 'OFF',
-					'modal-window' ) . '</span></a>';
+					'side-menu-lite' ) . '</span></a>';
 			$mode_on  = '<a href="' . esc_url( Link::deactivate_mode( $value->id ) ) . '" class="wpie-toogle is-on" data-tooltip="' . esc_attr( $mode_tooltip_off ) . '"><span>' . esc_attr__( 'ON',
-					'modal-window' ) . '</span></a>';
+					'side-menu-lite' ) . '</span></a>';
 
 			$mode = empty( $value->mode ) ? $mode_off : $mode_on;
 
@@ -163,7 +165,7 @@ class ListTable extends WP_List_Table {
 				$tag     = '<a href="' . esc_url( $tag_url ) . '">' . esc_attr( $value->tag ) . '</a>';
 			}
 
-			$link   = add_query_arg( [ 'id' => $value->id ], $main_link );
+			$link = add_query_arg( [ 'id' => $value->id ], $main_link );
 
 			$data[] = array(
 				'ID'     => $value->id,
@@ -187,13 +189,13 @@ class ListTable extends WP_List_Table {
 	}
 
 	public function get_search() {
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_list_action');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_list_action' );
 
 		if ( ! $verify ) {
 			return false;
 		}
 
-		return ! empty( $_POST['s'] ) ? urldecode( trim( sanitize_text_field( $_POST['s'] ) ) ) : false;
+		return ! empty( $_POST['s'] ) ? urldecode( trim( sanitize_text_field( wp_unslash( $_POST['s'] ) ) ) ) : false;
 	}
 
 	public function list_count(): int {
@@ -213,7 +215,7 @@ class ListTable extends WP_List_Table {
 
 		$search = $this->get_search();
 
-		$tag_search = ( ! empty( $_REQUEST['tag'] ) ) ? sanitize_text_field( $_REQUEST  ['tag'] ) : '';
+		$tag_search = ( ! empty( $_REQUEST['tag'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : '';
 		$tag_search = ( $tag_search === 'all' ) ? '' : $tag_search;
 
 
@@ -260,11 +262,11 @@ class ListTable extends WP_List_Table {
 
 	public function get_bulk_actions(): array {
 		$actions = [
-			'delete'     => __( 'Delate', 'modal-window' ),
-			'activate'   => __( 'Activate', 'modal-window' ),
-			'deactivate' => __( 'Deactivate', 'modal-window' ),
-			'test_on'    => __( 'Test mode ON', 'modal-window' ),
-			'test_off'   => __( 'Test mode OFF', 'modal-window' ),
+			'delete'     => __( 'Delate', 'side-menu-lite' ),
+			'activate'   => __( 'Activate', 'side-menu-lite' ),
+			'deactivate' => __( 'Deactivate', 'side-menu-lite' ),
+			'test_on'    => __( 'Test mode ON', 'side-menu-lite' ),
+			'test_off'   => __( 'Test mode OFF', 'side-menu-lite' ),
 		];
 
 		return $actions;
@@ -272,7 +274,7 @@ class ListTable extends WP_List_Table {
 
 	public function process_bulk_action(): bool {
 
-		$verify = AdminActions::verify(WOWP_Plugin::PREFIX . '_list_action');
+		$verify = AdminActions::verify( WOWP_Plugin::PREFIX . '_list_action' );
 
 		if ( ! $verify ) {
 			return false;
@@ -312,14 +314,14 @@ class ListTable extends WP_List_Table {
 		if ( 'top' === $which ) {
 			$tags = DBManager::get_tags_from_table();
 
-			$tag_search = ( ! empty( $_REQUEST['tag'] ) ) ? sanitize_text_field( $_REQUEST  ['tag'] ) : '';
+			$tag_search = ( ! empty( $_REQUEST['tag'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['tag'] ) ) : '';
 			$tag_search = ( $tag_search === 'all' ) ? '' : $tag_search;
 
 			echo '<div class="alignleft actions"><label for="filter-by-tag" class="screen-reader-text">' . esc_html__( 'Filter by tag',
-					'modal-window' ) . '</label>';
+					'side-menu-lite' ) . '</label>';
 			echo '<select name="tag" id="filter-by-tag">';
 			echo '<option value="all"' . selected( 'all', $tag_search, false ) . '>' . esc_html__( 'All',
-					'modal-window' ) . '</option>';
+					'side-menu-lite' ) . '</option>';
 
 			if ( ! empty( $tags ) ) {
 				foreach ( $tags as $tag ) {
@@ -331,16 +333,16 @@ class ListTable extends WP_List_Table {
 				}
 			}
 			echo '</select>';
-			submit_button( __( 'Filter', 'modal-window' ), 'secondary', 'action', false );
+			submit_button( __( 'Filter', 'side-menu-lite' ), 'secondary', 'action', false );
 			echo '</div>';
 		}
 	}
 
 	private function sort_data( $a, $b ): int {
 		// If no sort, default to title
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? sanitize_text_field( $_GET['orderby'] ) : 'ID';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'ID';
 		// If no order, default to asc
-		$order = ( ! empty( $_GET['order'] ) ) ? sanitize_text_field( $_GET['order'] ) : 'desc';
+		$order = ( ! empty( $_GET['order'] ) ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'desc';
 		// Determine sort order
 		$result = strnatcmp( $a[ $orderby ], $b[ $orderby ] );
 
