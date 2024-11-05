@@ -169,8 +169,8 @@ return [
 			'type' => 'select',
 			'name' => 'iframe_width_unit',
 			'atts' => [
-				''  => __( 'px', 'popup-box' ),
-				'%' => __( '%', 'popup-box' ),
+				''  => __( 'px', 'modal-window' ),
+				'%' => __( '%', 'modal-window' ),
 			],
 		],
 	],
@@ -186,8 +186,8 @@ return [
 			'type' => 'select',
 			'name' => 'iframe_height_unit',
 			'atts' => [
-				''  => __( 'px', 'popup-box' ),
-				'%' => __( '%', 'popup-box' ),
+				''  => __( 'px', 'modal-window' ),
+				'%' => __( '%', 'modal-window' ),
 			],
 		],
 	],

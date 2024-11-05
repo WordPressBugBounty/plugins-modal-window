@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Modal Window\n"
-"POT-Creation-Date: 2024-06-05 15:27+0300\n"
+"POT-Creation-Date: 2024-11-05 11:50+0200\n"
 "PO-Revision-Date: 2024-06-05 15:27+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -46,28 +46,38 @@ msgstr ""
 msgid "Modal Preview"
 msgstr ""
 
-#: admin/pages/3.tools.php:18
+#: admin/pages/3.tools.php:19
 msgid "Export Settings"
 msgstr ""
 
 #. translators: %s: plugin name
-#: admin/pages/3.tools.php:22
+#: admin/pages/3.tools.php:23
 #, php-format
 msgid ""
 "Export the  settings for %s as a .json file. This allows you to easily "
 "import the configuration into another site."
 msgstr ""
 
-#: admin/pages/3.tools.php:30
+#: admin/pages/3.tools.php:31
 msgid "Import Settings"
 msgstr ""
 
 #. translators: %s: plugin name
-#: admin/pages/3.tools.php:34
+#: admin/pages/3.tools.php:35
 #, php-format
 msgid ""
 "Import the %s settings from a .json file. This file can be obtained by "
 "exporting the settings on another site using the form above."
+msgstr ""
+
+#: admin/pages/3.tools.php:44
+msgid "Manage Capabilities"
+msgstr ""
+
+#: admin/pages/3.tools.php:46
+msgid ""
+"Manage the visibility of the plugin for users based on their Manage User "
+"Capabilities."
 msgstr ""
 
 #: admin/pages/4.support.php:17
@@ -83,22 +93,6 @@ msgstr ""
 #: admin/pages/4.support.php:23
 msgid ""
 "Also, you can send us your ideas and suggestions for improving the plugin."
-msgstr ""
-
-#: admin/pages/5.license.php:15
-msgid "License deactivation"
-msgstr ""
-
-#: admin/pages/5.license.php:15
-msgid "License activation"
-msgstr ""
-
-#: admin/pages/5.license.php:39
-msgid "Deactivate plugin"
-msgstr ""
-
-#: admin/pages/5.license.php:44
-msgid "Activate plugin"
 msgstr ""
 
 #: admin/settings/1.content.php:72
@@ -137,7 +131,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: admin/settings/2.style.php:120 classes/Admin/ListTable.php:96
+#: admin/settings/2.style.php:120 classes/Admin/ListTable.php:98
 msgid "Title"
 msgstr ""
 
@@ -575,7 +569,7 @@ msgstr ""
 msgid "Everywhere"
 msgstr ""
 
-#: admin/settings/options/rules.php:11 classes/Admin/ListTable.php:97
+#: admin/settings/options/rules.php:11 classes/Admin/ListTable.php:99
 msgid "Shortcode"
 msgstr ""
 
@@ -839,27 +833,27 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: admin/settings/sidebar.php:27 classes/Admin/ListTable.php:102
+#: admin/settings/sidebar.php:27 classes/Admin/ListTable.php:104
 msgid "Status"
 msgstr ""
 
-#: admin/settings/sidebar.php:30 classes/Admin/ListTable.php:265
+#: admin/settings/sidebar.php:30 classes/Admin/ListTable.php:267
 msgid "Deactivate"
 msgstr ""
 
-#: admin/settings/sidebar.php:35 classes/Admin/ListTable.php:99
+#: admin/settings/sidebar.php:35 classes/Admin/ListTable.php:101
 msgid "Test mode"
 msgstr ""
 
-#: admin/settings/sidebar.php:38 classes/Admin/ListTable.php:264
+#: admin/settings/sidebar.php:38 classes/Admin/ListTable.php:266
 msgid "Activate"
 msgstr ""
 
-#: admin/settings/sidebar.php:83 classes/Admin/ListTable.php:58
+#: admin/settings/sidebar.php:83 classes/Admin/ListTable.php:60
 msgid "Delete"
 msgstr ""
 
-#: admin/settings/sidebar.php:91 classes/Admin/ListTable.php:56
+#: admin/settings/sidebar.php:91 classes/Admin/ListTable.php:58
 msgid "Duplicate"
 msgstr ""
 
@@ -883,11 +877,11 @@ msgid ""
 "target=\"_blank\">rate us</a>"
 msgstr ""
 
-#: classes/Admin/Dashboard.php:132
+#: classes/Admin/Dashboard.php:133
 msgid "Add New"
 msgstr ""
 
-#: classes/Admin/Dashboard.php:166
+#: classes/Admin/Dashboard.php:167
 msgid "Update"
 msgstr ""
 
@@ -903,92 +897,101 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: classes/Admin/ImporterExporter.php:71
-msgid "Please upload a valid .json file"
+#: classes/Admin/ImporterExporter.php:70 classes/Admin/ImporterExporter.php:83
+msgid "Please select a file to import"
 msgstr ""
 
-#: classes/Admin/ImporterExporter.php:72
+#: classes/Admin/ImporterExporter.php:71 classes/Admin/ImporterExporter.php:78
+#: classes/Admin/ImporterExporter.php:84
 msgid "Error"
 msgstr ""
 
-#: classes/Admin/ListTable.php:50
+#: classes/Admin/ImporterExporter.php:77
+msgid "Please upload a valid .json file"
+msgstr ""
+
+#: classes/Admin/ListTable.php:52
 msgid "Untitled"
 msgstr ""
 
-#: classes/Admin/ListTable.php:54
+#: classes/Admin/ListTable.php:56
 msgid "Edit"
 msgstr ""
 
-#: classes/Admin/ListTable.php:60
+#: classes/Admin/ListTable.php:62
 msgid "Export"
 msgstr ""
 
-#: classes/Admin/ListTable.php:64
+#: classes/Admin/ListTable.php:66
 msgid "View"
 msgstr ""
 
-#: classes/Admin/ListTable.php:98
+#: classes/Admin/ListTable.php:100
 msgid "Tag"
 msgstr ""
 
-#: classes/Admin/ListTable.php:100
+#: classes/Admin/ListTable.php:102
 msgid "The item will only be displayed for administrators."
 msgstr ""
 
-#: classes/Admin/ListTable.php:103
+#: classes/Admin/ListTable.php:105
 msgid "Display item on the Frontend."
 msgstr ""
 
-#: classes/Admin/ListTable.php:138
+#: classes/Admin/ListTable.php:140
 msgid "UnTitle"
 msgstr ""
 
-#: classes/Admin/ListTable.php:139
+#: classes/Admin/ListTable.php:141
 msgid "Click for Deactivate."
 msgstr ""
 
-#: classes/Admin/ListTable.php:140
+#: classes/Admin/ListTable.php:142
 msgid "Click for Activate."
 msgstr ""
 
-#: classes/Admin/ListTable.php:141 classes/Admin/ListTable.php:150
+#: classes/Admin/ListTable.php:143 classes/Admin/ListTable.php:152
 msgid "OFF"
 msgstr ""
 
-#: classes/Admin/ListTable.php:143 classes/Admin/ListTable.php:152
+#: classes/Admin/ListTable.php:145 classes/Admin/ListTable.php:154
 msgid "ON"
 msgstr ""
 
-#: classes/Admin/ListTable.php:147
+#: classes/Admin/ListTable.php:149
 msgid "Click for OFF."
 msgstr ""
 
-#: classes/Admin/ListTable.php:148
+#: classes/Admin/ListTable.php:150
 msgid "Click for ON."
 msgstr ""
 
-#: classes/Admin/ListTable.php:263
+#: classes/Admin/ListTable.php:265
 msgid "Delate"
 msgstr ""
 
-#: classes/Admin/ListTable.php:266
+#: classes/Admin/ListTable.php:268
 msgid "Test mode ON"
 msgstr ""
 
-#: classes/Admin/ListTable.php:267
+#: classes/Admin/ListTable.php:269
 msgid "Test mode OFF"
 msgstr ""
 
-#: classes/Admin/ListTable.php:318
+#: classes/Admin/ListTable.php:320
 msgid "Filter by tag"
 msgstr ""
 
-#: classes/Admin/ListTable.php:321
+#: classes/Admin/ListTable.php:323
 msgid "All"
 msgstr ""
 
-#: classes/Admin/ListTable.php:334
+#: classes/Admin/ListTable.php:336
 msgid "Filter"
+msgstr ""
+
+#: classes/Admin/ManageCapabilities.php:34
+msgid "Save Change"
 msgstr ""
 
 #: classes/Admin/SupportForm.php:24
@@ -1011,27 +1014,27 @@ msgstr ""
 msgid "Message type"
 msgstr ""
 
-#: classes/Admin/SupportForm.php:62
+#: classes/Admin/SupportForm.php:61
 msgid "Issue"
 msgstr ""
 
-#: classes/Admin/SupportForm.php:63
+#: classes/Admin/SupportForm.php:62
 msgid "Idea"
 msgstr ""
 
-#: classes/Admin/SupportForm.php:71
+#: classes/Admin/SupportForm.php:70
 msgid "Plugin"
 msgstr ""
 
-#: classes/Admin/SupportForm.php:80
+#: classes/Admin/SupportForm.php:79
 msgid "License Key"
 msgstr ""
 
-#: classes/Admin/SupportForm.php:91
+#: classes/Admin/SupportForm.php:90
 msgid "Enter Your Message"
 msgstr ""
 
-#: classes/Admin/SupportForm.php:102
+#: classes/Admin/SupportForm.php:101
 msgid "Send to Support"
 msgstr ""
 
@@ -1064,7 +1067,7 @@ msgid "Modal Window"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "https://wordpress.org/plugins/modal-window/"
+msgid "https://wow-estore.com/item/wow-modal-windows-pro/"
 msgstr ""
 
 #. Description of the plugin/theme

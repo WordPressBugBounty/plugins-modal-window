@@ -39,8 +39,12 @@ class WOWP_Admin {
 			die();
 		}
 
-		$content  = do_shortcode( wp_unslash( $_POST['data'] ) );
-		parse_str( $_POST['form_data'], $output );
+		if ( empty( $_POST['data'] ) ) {
+			return;
+		}
+
+		$content = do_shortcode( wp_unslash( $_POST['data'] ) );
+		parse_str( wp_unslash($_POST['form_data']), $output );
 
 		$modal_maker = new Modal_Maker( 'preview', $output['param'], $output['title'], $content );
 		$modal       = $modal_maker->init();
@@ -78,9 +82,62 @@ class WOWP_Admin {
 
 	public function save_settings() {
 		$param            = ! empty( $_POST['param'] ) ? map_deep( $_POST['param'], 'sanitize_text_field' ) : [];
-		$param['content'] = wp_kses_post( wp_encode_emoji( wp_unslash( $_POST['param']['content'] ) ) );
+		$param['content'] = $this->sanitize_content( wp_unslash( $_POST['param']['content'] ) );
 
 		return $param;
+	}
+
+
+	private function sanitize_content( $content ) {
+		// Define a custom allowed HTML array including form elements
+		$allowed_html = array_merge(
+			wp_kses_allowed_html( 'post' ), // Allow all tags permitted by wp_kses_post
+			array(
+				'form'     => array(
+					'action' => true,
+					'method' => true,
+					'id'     => true,
+					'class'  => true,
+				),
+				'input'    => array(
+					'type'        => true,
+					'name'        => true,
+					'value'       => true,
+					'placeholder' => true,
+					'id'          => true,
+					'class'       => true,
+					'checked'     => true,
+				),
+				'textarea' => array(
+					'name'        => true,
+					'id'          => true,
+					'class'       => true,
+					'rows'        => true,
+					'cols'        => true,
+					'placeholder' => true,
+				),
+				'button'   => array(
+					'type'  => true,
+					'name'  => true,
+					'value' => true,
+					'id'    => true,
+					'class' => true,
+				),
+				'select'   => array(
+					'name'  => true,
+					'id'    => true,
+					'class' => true,
+				),
+				'option'   => array(
+					'value'    => true,
+					'selected' => true,
+				),
+			)
+		);
+
+		$sanitized_content = wp_kses( wp_encode_emoji( $content ), $allowed_html );
+
+		return $sanitized_content;
 	}
 
 	public function sanitize_text( $text ): string {
@@ -111,10 +168,10 @@ class WOWP_Admin {
 		wp_enqueue_script( $slug . '-fonticonpicker', $fonticonpicker_js, array( 'jquery' ), '2.0', true );
 
 		$fonticonpicker_css = $url_assets . 'fonticonpicker/css/fonticonpicker.min.css';
-		wp_enqueue_style( $slug . '-fonticonpicker', $fonticonpicker_css );
+		wp_enqueue_style( $slug . '-fonticonpicker', $fonticonpicker_css, null, '2.0' );
 
 		$fonticonpicker_dark_css = $url_assets . 'fonticonpicker/fonticonpicker.darkgrey.min.css';
-		wp_enqueue_style( $slug . '-fonticonpicker-darkgrey', $fonticonpicker_dark_css );
+		wp_enqueue_style( $slug . '-fonticonpicker-darkgrey', $fonticonpicker_dark_css, null, '2.0' );
 
 		$arg = [
 			'plugin_url' => WOWP_Plugin::url(),

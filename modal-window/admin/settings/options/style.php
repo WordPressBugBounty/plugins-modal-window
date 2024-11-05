@@ -459,28 +459,28 @@ return [
 
 	'close_top_position' => [
 		'type'  => 'number',
-		'title' => __( 'Top', 'popup-box' ),
+		'title' => __( 'Top', 'modal-window' ),
 		'val'   => '0',
 		'addon' => 'px',
 	],
 
 	'close_bottom_position' => [
 		'type'  => 'number',
-		'title' => __( 'Bottom', 'popup-box' ),
+		'title' => __( 'Bottom', 'modal-window' ),
 		'val'   => '0',
 		'addon' => 'px',
 	],
 
 	'close_left_position' => [
 		'type'  => 'number',
-		'title' => __( 'Left', 'popup-box' ),
+		'title' => __( 'Left', 'modal-window' ),
 		'val'   => '0',
 		'addon' => 'px',
 	],
 
 	'close_right_position' => [
 		'type'  => 'number',
-		'title' => __( 'Right', 'popup-box' ),
+		'title' => __( 'Right', 'modal-window' ),
 		'val'   => '0',
 		'addon' => 'px',
 	],

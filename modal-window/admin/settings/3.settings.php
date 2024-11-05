@@ -66,7 +66,7 @@ $open       = ! empty( $item_order ) ? ' open' : '';
                value="<?php echo absint( $item_order ); ?>">
         <summary class="wpie-item_heading">
             <span class="wpie-item_heading_icon"><span class="wpie-icon wpie_icon-sparkle"></span></span>
-            <span class="wpie-item_heading_label"><?php esc_html_e( 'Animation', 'wow-modal-window-pro' ); ?></span>
+            <span class="wpie-item_heading_label"><?php esc_html_e( 'Animation', 'modal-window' ); ?></span>
             <span class="wpie-item_heading_type"></span>
             <span class="wpie-item_heading_toogle">
         <span class="wpie-icon wpie_icon-chevron-down"></span>

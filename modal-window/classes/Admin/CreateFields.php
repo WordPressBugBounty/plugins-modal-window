@@ -89,6 +89,13 @@ class CreateFields {
 	private function output( $content ): void {
 		$allowed_post_tags = wp_kses_allowed_html( 'post' );
 		$allowed_html = array(
+			'form' => array(
+				'action' => true,
+				'method' => true,
+				'id' => true,
+				'class' => true,
+			),
+			'legend' => true,
 			'input'    => array(
 				'type'               => [],
 				'data-field'         => [],
@@ -103,15 +110,34 @@ class CreateFields {
 				'max'                => [],
 				'step'               => [],
 				'data-alpha-enabled' => [],
+				'id' => true,
+			),
+			'textarea' => array(
+				'name' => true,
+				'id' => true,
+				'class' => true,
+				'rows' => true,
+				'cols' => true,
+				'placeholder' => true,
+			),
+			'button' => array(
+				'type' => true,
+				'name' => true,
+				'value' => true,
+				'id' => true,
+				'class' => true,
 			),
 			'select'   => [
 				'name'       => [],
 				'data-field' => [],
+				'id' => true,
+				'class' => true,
 
 			],
 			'option'   => [
 				'value'    => [],
 				'selected' => [],
+
 			],
 			'optgroup' => [
 				'label' => [],
