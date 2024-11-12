@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 6.1.2
+Stable tag: 6.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,11 @@ To solve this problem:
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+
+= 6.1.3 =
+* Added: fullscreen option for shortcode video.
+* Fixed: option 'Show once'.
+
 = 6.1.2 =
 * Fixed: main icon in the admin menu.
 * Fixed: minor bugs

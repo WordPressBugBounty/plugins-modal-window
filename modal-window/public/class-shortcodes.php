@@ -33,7 +33,7 @@ class WOWP_Shortcodes {
 			$url = 'https://player.vimeo.com/video/';
 		}
 
-		return '<iframe width="' . absint( $atts['width'] ) . '" height="' . absint( $atts['height'] ) . '" src="' . esc_url( $url ) . esc_attr( $atts['id'] ) . '" allow="autoplay" frameborder="0" loading="lazy"></iframe>';
+		return '<iframe width="' . absint( $atts['width'] ) . '" height="' . absint( $atts['height'] ) . '" src="' . esc_url( $url ) . esc_attr( $atts['id'] ) . '" allow="autoplay" frameborder="0" loading="lazy" allowfullscreen></iframe>';
 	}
 
 	public function button_shortcode( $atts, $content ): string {

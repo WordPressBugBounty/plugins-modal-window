@@ -151,14 +151,31 @@ jQuery(document).ready(function($) {
                     return;
                 }
                 let days = parseFloat(settings.cookie[1]);
-                let CookieDate = new Date();
-                CookieDate.setTime(CookieDate.getTime() + (days * 24 * 60 * 60 * 1000));
-                if (days > 0) {
-                    document.cookie = settings.cookie[2] + '=yes; path=/; expires=' + CookieDate.toGMTString();
-                } else {
-                    document.cookie = settings.cookie[2] + '=yes; path=/;';
-                }
+                let now = new Date();
+                const ttl = days * 24 * 60 * 60 * 1000;
+                const item = {
+                    value: 'yes',
+                    expiry: now.getTime() + ttl,
+                };
+                localStorage.setItem(settings.cookie[2], JSON.stringify(item));
             }
+
+            function getModalCookie(key) {
+                const itemStr = localStorage.getItem(key);
+
+                if (!itemStr) {
+                    return false;
+                }
+                const item = JSON.parse(itemStr);
+                const now = new Date();
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key);
+                    return false;
+                }
+                return true;
+            }
+
 
             function _extractConfig(pieces) {
                 const type = pieces[0];
@@ -310,6 +327,10 @@ jQuery(document).ready(function($) {
 
 
             function openModalWindow() {
+
+                if (getModalCookie(settings.cookie[2]) && settings.cookie[0]) {
+                    return;
+                }
 
                 const speed = parseInt(settings.animation[1]);
 
