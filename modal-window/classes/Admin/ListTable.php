@@ -170,7 +170,12 @@ class ListTable extends WP_List_Table {
 			$data[] = array(
 				'ID'     => $value->id,
 				'title'  => '<a href="' . esc_url( $link ) . '">' . esc_html( $title ) . '</a>',
-				'code'   => '<input type="text" value="[' . esc_attr( $shortcode ) . ' id=\'' . absint( $value->id ) . '\']" readonly>',
+				'code'   => '<div class="wpie-field">
+                    <label class="wpie-field__label has-icon">
+                        <span class="has-tooltip is-pointer on-right can-copy" data-tooltip="Copy"><span class="dashicons dashicons-shortcode is-pointer" ></span></span>
+                        <input type="text" value="[' . esc_attr( $shortcode ) . ' id=\'' . absint( $value->id ) . '\']" readonly>
+                    </label>
+                </div>',
 				'tag'    => $tag,
 				'mode'   => $mode,
 				'status' => $status,

@@ -30,7 +30,7 @@ final class Wow_Company {
 		$slug       = 'wow-company';
 
 		add_menu_page( $page_title, $menu_title, $capability, $slug, [ $this, 'welcome_page' ], $icon );
-		add_submenu_page( $slug, $page_title, 'Hey 👋', $capability, $slug );
+		add_submenu_page( $slug, $page_title, '&#128075; Hey', $capability, $slug );
 	}
 
 	public function welcome_page(): void {

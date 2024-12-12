@@ -23,6 +23,7 @@ class Dashboard {
 
 	public static function init() {
 		add_filter( 'plugin_action_links', [ __CLASS__, 'settings_link' ], 10, 2 );
+		add_filter('plugin_row_meta', [ __CLASS__, 'plugin_link' ], 10, 4);
 		add_filter( 'admin_footer_text', [ __CLASS__, 'footer_text' ] );
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_assets' ] );
 		add_action( 'admin_menu', [ __CLASS__, 'admin_page' ] );
@@ -39,6 +40,15 @@ class Dashboard {
 		array_unshift( $links, $settings_link );
 
 		return $links;
+	}
+
+	public static function plugin_link($plugin_meta, $plugin_file, $plugin_data, $status) {
+		if ( false === strpos( $plugin_file, WOWP_Plugin::basename() ) ) {
+			return $plugin_meta;
+		}
+		$plugin_meta[] = '<a href="'. esc_url( WOWP_Plugin::info( 'change' ) ).'" target="_blank">'.esc_attr__( 'Check Version', 'modal-window' ).'</a>';
+
+		return $plugin_meta;
 	}
 
 	public static function footer_text( $footer_text ) {

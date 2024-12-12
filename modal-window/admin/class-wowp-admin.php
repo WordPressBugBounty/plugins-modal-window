@@ -76,6 +76,7 @@ class WOWP_Admin {
 			echo esc_url( WOWP_Plugin::info( 'docs' ) ); ?>" target="_blank">Documentation</a>
             <a href="<?php
 			echo esc_url( WOWP_Plugin::info( 'rating' ) ); ?>" target="_blank" class="wpie-color-orange">Rating</a>
+            <a href="<?php echo esc_url( WOWP_Plugin::info( 'change' ) ); ?>" target="_blank">Check Version</a>
         </div>
 		<?php
 	}
