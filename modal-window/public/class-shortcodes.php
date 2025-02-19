@@ -6,7 +6,6 @@ defined( 'ABSPATH' ) || exit;
 
 class WOWP_Shortcodes {
 	public function __construct() {
-
 		add_shortcode( 'videoBox', [ $this, 'video_shortcode' ] );
 		add_shortcode( 'buttonBox', [ $this, 'button_shortcode' ] );
 		add_shortcode( 'iframeBox', [ $this, 'iframe_shortcode' ] );
@@ -65,15 +64,66 @@ class WOWP_Shortcodes {
 			'width'  => '560',
 			'height' => '450',
 			'attr'   => '',
+			'id'     => '',
+			'class'  => '',
+			'style'  => '',
 		), $atts, 'iframeBox' );
 
-		$iframe = '<iframe width="' . esc_attr( $atts['width'] ) . '" height="' . esc_attr( $atts['height'] ) . '" src="' . esc_url( $atts['link'] ) . '" ' . wp_kses_post( $atts['attr'] ) . ' loading="lazy"></iframe>';
+		$allowed_attributes = array(
+			'allowfullscreen',
+			'title',
+			'name',
+			'sandbox',
+			'referrerpolicy',
+			'loading',
+			'allow',
+			'allowfullscreen',
+			'style'
+		);
+
+		$attr_string = '';
+		if ( ! empty( $atts['attr'] ) ) {
+			// Розбиваємо рядок атрибутів у форматі key="value"
+			preg_match_all( '/(\w+)=(".*?"|\'.*?\'|\w+)/', $atts['attr'], $matches, PREG_SET_ORDER );
+
+			foreach ( $matches as $match ) {
+				$attr_name  = strtolower( $match[1] );
+				$attr_value = trim( $match[2], '\'"' );
+
+				if ( in_array( $attr_name, $allowed_attributes, true ) ) {
+					if ( 'style' === $attr_name ) {
+						$attr_value = $this->sanitize_style_attribute( $attr_value );
+					} else {
+						$attr_value = esc_attr( $attr_value );
+					}
+					$attr_string .= ' ' . esc_attr( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
+				}
+			}
+		}
+
+		$iframe = '<iframe width="' . esc_attr( $atts['width'] ) . '" height="' . esc_attr( $atts['height'] ) . '" src="' . esc_url( $atts['link'] ) . '" loading="lazy" ' . $attr_string;
+		if ( ! empty( $atts['id'] ) ) {
+			$iframe .= ' id="' . esc_attr( $atts['id'] ) . '"';
+		}
+		if ( ! empty( $atts['class'] ) ) {
+			$iframe .= ' class="' . esc_attr( $atts['class'] ) . '"';
+		}
+		if ( ! empty( $atts['style'] ) ) {
+			$iframe .= ' style="' . $this->sanitize_style_attribute( $atts['style'] ) . '"';
+		}
+		$iframe .= '></iframe>';
 
 		return $iframe;
 	}
 
-	public function shortcode_icon( $atts ): string {
+	public function sanitize_style_attribute( $style ): ?string {
+		$style = preg_replace( '/expression|javascript|vbscript|data:/i', '', $style );
+		$style = preg_replace( '/[^a-zA-Z0-9:;.\s%-]/', '', $style );
 
+		return esc_attr( $style );
+	}
+
+	public function shortcode_icon( $atts ): string {
 		$handle          = WOWP_Plugin::SLUG;
 		$assets          = plugin_dir_url( __FILE__ ) . 'assets/';
 		$version         = WOWP_Plugin::info( 'version' );
@@ -90,20 +140,19 @@ class WOWP_Shortcodes {
 		if ( ! empty( $atts['size'] ) || ! empty( $atts['color'] ) ) {
 			$size  = ( ! empty( $atts['size'] ) ) ? "font-size:" . $atts['size'] . "px;" : '';
 			$color = ( ! empty( $atts['color'] ) ) ? "color:" . $atts['color'] : '';
-			$style = ' style="' . esc_attr($size . $color) . '"';
+			$style = ' style="' . esc_attr( $size . $color ) . '"';
 		} else {
 			$style = '';
 		}
 		if ( ! empty( $atts['link'] ) ) {
-			$icon = '<a href="' . esc_url($atts['link']) . '" target="' . esc_attr($atts['target']) . '"><i class="' . esc_attr($atts['name']) . '"' . $style . '></i></a>';
+			$icon = '<a href="' . esc_url( $atts['link'] ) . '" target="' . esc_attr( $atts['target'] ) . '"><i class="' . esc_attr( $atts['name'] ) . '"' . $style . '></i></a>';
 		} else {
-			$icon = '<i class="' . esc_attr($atts['name']) . '"' . $style . '></i>';
+			$icon = '<i class="' . esc_attr( $atts['name'] ) . '"' . $style . '></i>';
 		}
 
 		wp_enqueue_style( $handle . '-fontawesome', $url_fontawesome, null, '6.5.1' );
 
 		return $icon;
-
 	}
 
 	public function shortcode_row( $atts, $content = null ) {
@@ -111,7 +160,6 @@ class WOWP_Shortcodes {
 	}
 
 	public function shortcode_columns( $atts, $content = null ) {
-
 		$atts = shortcode_atts(
 			[ 'width' => "12", 'align' => 'left' ],
 			$atts,
