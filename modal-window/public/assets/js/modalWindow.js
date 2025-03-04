@@ -50,6 +50,7 @@ jQuery(document).ready(function($) {
             const otherForm =  $(self).find('.wpcf7, form.wpforms-form');
             const screen = $(window).width();
             const windowHeight = $(window).height();
+            let lastFocusedElement;
 
             const videoSrc = checkVideo();
 
@@ -358,6 +359,20 @@ jQuery(document).ready(function($) {
                         const config = _extractConfig(pieces);
                         $(content).show(config.type, config.options, speed);
                     };
+
+                    lastFocusedElement = document.activeElement;
+
+                    setTimeout(() => {
+                        $(content).focus();
+                    }, 50);
+
+                    $('body').children().each(function () {
+                        if ($(this).find('.modal-window__content').length || $(this).hasClass('modal-window__content')) {
+                            return;
+                        }
+                        $(this).attr('inert', '');
+                    });
+
                     animate();
                     openActions();
                 });
@@ -529,6 +544,11 @@ jQuery(document).ready(function($) {
                 const animationType = settings.animation[2].split(':')[0];
                 const pieces = settings.animation[2].split(':');
 
+                $('[inert]').removeAttr('inert');
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
+
                 const animations = {
                     'no': () => $(content).hide(0, closeOverlay),
                     'fade': () => $(content).fadeOut(speed, closeOverlay),
@@ -574,8 +594,10 @@ jQuery(document).ready(function($) {
                 $(content).find('.modal-close-button').on('click', function () {
                     closeModalWindow();
                 });
-                $(content).find('.modal-window__close').on('click', function () {
-                    closeModalWindow();
+                $(content).find('.modal-window__close').on('click keydown', function (e) {
+                    if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+                        closeModalWindow();
+                    }
                 });
             }
 

@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 6.1.6
+Stable tag: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,10 @@ To solve this problem:
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+= 6.2 =
+* Added: attribute aria-live to notify screen readers of the popup’s sudden appearance.
+* Implemented: WCAG compliance improvements for the modal window.
+
 = 6.1.6 =
 * Fixed: shortcode 'iframeBox'
 

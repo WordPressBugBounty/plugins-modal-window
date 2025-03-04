@@ -183,7 +183,7 @@ body.no-scroll {
   transition: all 0.2s ease;
   inset: var(--mw-close-inset);
 }
-.modal-window__close:hover {
+.modal-window__close:focus, .modal-window__close:hover {
   background-color: var(--mw-close-h-bg);
   color: var(--mw-close-h-color);
 }

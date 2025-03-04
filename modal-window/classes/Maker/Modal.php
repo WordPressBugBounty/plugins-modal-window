@@ -29,36 +29,44 @@ class Modal {
 	}
 
 	private function create_modal(): string {
-		$param          = $this->param;
+		$param = $this->param;
 
-		$modal = '<div class="modal-window" id="modal-window-' . absint( $this->id ) . '">';
+		$modal = '<div class="modal-window" id="modal-window-' . absint( $this->id ) . '" role="dialog" aria-modal="true"';
+		if ( ! empty( $param['popup_title'] ) ) {
+			$modal .= ' aria-labelledby="modal-title-' . absint( $this->id ) . '"';
+		}
+		$aria_live = ! empty( $param['aria_live'] ) ? $param['aria_live'] : 'off';
+		$modal     .= '  aria-live="' . esc_attr( $aria_live ) . '"';
+
+		$modal .= '>';
 		$modal .= '<div class="modal-window__wrapper">';
 		$modal .= '<div class="modal-window__content">';
-		$modal .= $this->close_button();
 		$modal .= '<div class="modal-window__content-wrapper">';
 		if ( ! empty( $param['popup_title'] ) ) {
-			$modal .= '<div class="modal-window__title">' . esc_html( $this->title ) . '</div>';
+			$modal .= '<div class="modal-window__title" id="modal-title-' . absint( $this->id ) . '">' . esc_html( $this->title ) . '</div>';
 		}
-		$modal .= '<div class="modal-window__content-main">';
+		$modal         .= '<div class="modal-window__content-main">';
 		$modal_content = do_shortcode( wp_kses_post( $param['content'] ) );
-		$modal .= $modal_content;
-		$modal .= '</div></div></div></div>';
-		$modal .= $this->create_button();
-		$modal .= '</div>';
+		$modal         .= $modal_content;
+		$modal         .= '</div></div>';
+		$modal         .= $this->close_button();
+		$modal         .= '</div></div>';
+		$modal         .= $this->create_button();
+		$modal         .= '</div>';
 
 		return $modal;
-
 	}
 
 	private function close_button(): string {
-		$param  = $this->param;
-		if(!empty($param['close_button_remove'])) {
+		$param = $this->param;
+		if ( ! empty( $param['close_button_remove'] ) ) {
 			return '';
 		}
-		if($param['close_type'] === 'text') {
-			return '<div class="modal-window__close">'.esc_html($param['close_content']).'</div>';
+		if ( $param['close_type'] === 'text' ) {
+			return '<div class="modal-window__close" tabindex="0" role="button" aria-label="' . esc_attr( $param['close_content'] ) . '">' . esc_html( $param['close_content'] ) . '</div>';
 		}
-		return '<div class="modal-window__close -image"></div>';
+
+		return '<div class="modal-window__close -image" tabindex="0" role="button" aria-label="' . esc_attr( $param['close_content'] ) . '"></div>';
 	}
 
 	private function create_button(): string {

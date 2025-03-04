@@ -15,6 +15,9 @@ $field    = new CreateFields( $options, $page_opt );
         <div class="wpie-fields is-column">
 			<?php $field->create( 'content' ); ?>
         </div>
+        <div class="wpie-fields">
+		    <?php $field->create( 'aria_live' ); ?>
+        </div>
     </div>
 
     <div id="popupShortcode" style="display:none;">

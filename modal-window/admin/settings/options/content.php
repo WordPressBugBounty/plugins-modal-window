@@ -14,6 +14,17 @@ return [
 		]
 	],
 
+	'aria_live' => [
+		'type'  => 'select',
+		'title' => __( 'Aria Live', 'modal-window' ),
+		'val'   => 'off',
+		'atts'  => [
+			'off'       => 'off',
+			'polite'    => 'polite',
+			'assertive' => 'assertive',
+		]
+	],
+
 	'shortcode_type' => [
 		'type'  => 'select',
 		'title' => __( 'Shortcode Type', 'modal-window' ),

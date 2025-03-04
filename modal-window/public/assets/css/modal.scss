@@ -202,6 +202,7 @@ body.no-scroll {
     transition: all 0.2s ease;
     inset: var(--mw-close-inset);
 
+    &:focus,
     &:hover {
       background-color: var(--mw-close-h-bg);
       color: var(--mw-close-h-color);
