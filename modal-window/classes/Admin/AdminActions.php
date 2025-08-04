@@ -1,4 +1,15 @@
 <?php
+/**
+ * AdminActions class for Modal Window plugin.
+ *
+ * @package ModalWindow\Admin
+ *
+ * Methods:
+ * - init()            Initialize admin actions hook
+ * - actions()         Handle admin requests based on request name
+ * - verify( $name )   Verify nonce and user capability
+ * - check_name()      Detect action name from $_REQUEST
+ */
 
 namespace ModalWindow\Admin;
 
@@ -15,63 +26,58 @@ class AdminActions {
 	public static function actions(): bool {
 		$name = self::check_name();
 
-		if ( empty( $name ) ) {
-			return false;
-		}
-		$verify = self::verify( $name );
-
-		if ( ! $verify ) {
+		if ( ! $name || ! self::verify( $name ) ) {
 			return false;
 		}
 
-		if ( strpos( $name, '_export_data' ) !== false ) {
-			ImporterExporter::export_data();
-		} elseif ( strpos( $name, '_export_item' ) !== false ) {
-			ImporterExporter::export_item();
-		} elseif ( strpos( $name, '_import_data' ) !== false ) {
-			ImporterExporter::import_data();
-		} elseif ( strpos( $name, '_remove_item' ) !== false ) {
-			DBManager::remove_item();
-		} elseif ( strpos( $name, '_settings' ) !== false ) {
-			Settings::save_item();
-		} elseif ( strpos( $name, '_activate_item' ) !== false ) {
-			Settings::activate_item();
-		} elseif ( strpos( $name, '_deactivate_item' ) !== false ) {
-			Settings::deactivate_item();
-		} elseif ( strpos( $name, '_activate_mode' ) !== false ) {
-			Settings::activate_mode();
-		} elseif ( strpos( $name, '_deactivate_mode' ) !== false ) {
-			Settings::deactivate_mode();
-		} elseif ( strpos( $name, '_capabilities' ) !== false ) {
-			ManageCapabilities::save();
+		$map = [
+			'_export_data'     => [ ImporterExporter::class,     'export_data' ],
+			'_export_item'     => [ ImporterExporter::class,     'export_item' ],
+			'_import_data'     => [ ImporterExporter::class,     'import_data' ],
+			'_remove_item'     => [ DBManager::class,            'remove_item' ],
+			'_settings'        => [ Settings::class,             'save_item' ],
+			'_activate_item'   => [ Settings::class,             'activate_item' ],
+			'_deactivate_item' => [ Settings::class,             'deactivate_item' ],
+			'_activate_mode'   => [ Settings::class,             'activate_mode' ],
+			'_deactivate_mode' => [ Settings::class,             'deactivate_mode' ],
+			'_capabilities'    => [ ManageCapabilities::class,   'save' ],
+		];
+
+		foreach ( $map as $key => $callback ) {
+			if ( is_callable( $callback ) && strpos( $name, $key ) !== false ) {
+				$callback();
+				break;
+			}
 		}
 
 		return true;
 	}
 
-	public static function verify( $name ): bool {
+	public static function verify( string $name ): bool {
 		$nonce_action = WOWP_Plugin::PREFIX . '_nonce';
-		$nonce        = isset( $_REQUEST[ $name ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ $name ] ) ) : '';
-		$capability  = ManageCapabilities::get_capability();
+		$nonce        = sanitize_text_field( wp_unslash( $_REQUEST[ $name ] ?? '' ) );
+		$capability   = ManageCapabilities::get_capability();
 
-		return ( ! empty( $nonce ) &&  wp_verify_nonce( $nonce, $nonce_action ) && current_user_can( $capability ) );
+		return $nonce && wp_verify_nonce( $nonce, $nonce_action ) && current_user_can( $capability );
 	}
 
 	private static function check_name(): string {
-		$names = [
-			WOWP_Plugin::PREFIX . '_import_data',
-			WOWP_Plugin::PREFIX . '_export_data',
-			WOWP_Plugin::PREFIX . '_export_item',
-			WOWP_Plugin::PREFIX . '_remove_item',
-			WOWP_Plugin::PREFIX . '_settings',
-			WOWP_Plugin::PREFIX . '_activate_item',
-			WOWP_Plugin::PREFIX . '_deactivate_item',
-			WOWP_Plugin::PREFIX . '_activate_mode',
-			WOWP_Plugin::PREFIX . '_deactivate_mode',
-			WOWP_Plugin::PREFIX . '_capabilities',
+		$actions = [
+			'_import_data',
+			'_export_data',
+			'_export_item',
+			'_remove_item',
+			'_settings',
+			'_activate_item',
+			'_deactivate_item',
+			'_activate_mode',
+			'_deactivate_mode',
+			'_capabilities',
 		];
 
-		foreach ( $names as $name ) {
+		foreach ( $actions as $action ) {
+			$name = WOWP_Plugin::PREFIX . $action;
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( isset( $_REQUEST[ $name ] ) ) {
 				return $name;
 			}
@@ -79,6 +85,4 @@ class AdminActions {
 
 		return '';
 	}
-
-
 }
