@@ -160,7 +160,7 @@ class WOWP_Admin {
 		wp_enqueue_script( 'htmlhint' );
 		wp_enqueue_script( 'csslint' );
 
-		wp_enqueue_style( 'modal-fontawesome', WOWP_Plugin::url() . 'vendors/fontawesome/css/all.min.css', [], '6.6' );
+		wp_enqueue_style( 'modal-fontawesome', WOWP_Plugin::url() . 'vendors/fontawesome/css/all.min.css', [], '7.1' );
 
 		// include fonticonpicker styles & scripts
 		$url_assets        = WOWP_Plugin::url() . 'vendors/';

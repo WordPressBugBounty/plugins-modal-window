@@ -91,7 +91,7 @@ class WOWP_Public {
 				$script = new Script( $id, $param );
 				$data['modal-window-' . absint( $id)] = $script->init();
 				if($param['button_type'] === '2' || $param['button_type'] === '3') {
-					wp_enqueue_style( $handle . '-fontawesome', $url_fontawesome, null, '6.6' );
+					wp_enqueue_style( $handle . '-fontawesome', $url_fontawesome, null, '7.1' );
 				}
 			}
 

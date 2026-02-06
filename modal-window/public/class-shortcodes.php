@@ -150,7 +150,7 @@ class WOWP_Shortcodes {
 			$icon = '<i class="' . esc_attr( $atts['name'] ) . '"' . $style . '></i>';
 		}
 
-		wp_enqueue_style( $handle . '-fontawesome', $url_fontawesome, null, '6.5.1' );
+		wp_enqueue_style( $handle . '-fontawesome', $url_fontawesome, null, '7.1' );
 
 		return $icon;
 	}
