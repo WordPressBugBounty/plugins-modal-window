@@ -23,7 +23,7 @@ class WOWP_Shortcodes {
 		), $atts, 'videoBox' );
 
 		if ( empty( $atts['id'] ) ) {
-			return false;
+			return '';
 		}
 
 		if ( $atts['from'] === 'youtube' ) {

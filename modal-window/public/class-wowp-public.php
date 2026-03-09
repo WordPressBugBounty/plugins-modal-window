@@ -25,12 +25,12 @@ defined( 'ABSPATH' ) || exit;
 
 class WOWP_Public {
 
-	private string $pefix;
+	private string $prefix;
 
 	public function __construct() {
 		$this->includes();
 		// prefix for plugin assets
-		$this->pefix = '.min';
+		$this->prefix = '.min';
 
 		add_shortcode( WOWP_Plugin::SHORTCODE, [ $this, 'shortcode' ] );
 
@@ -85,7 +85,7 @@ class WOWP_Public {
 		$args = $singleton->getValue();
 
 		if ( ! empty( $args ) ) {
-			wp_enqueue_script( $handle, $assets . 'js/modalWindow' . $this->pefix . '.js', ['jquery'], $version, true );
+			wp_enqueue_script( $handle, $assets . 'js/modalWindow' . $this->prefix . '.js', ['jquery'], $version, true );
 			$data = [];
 			foreach ( $args as $id => $param ) {
 				$script = new Script( $id, $param );
@@ -106,7 +106,7 @@ class WOWP_Public {
 		$assets  = plugin_dir_url( __FILE__ ) . 'assets/';
 		$version = WOWP_Plugin::info( 'version' );
 
-		wp_enqueue_style( $handle, $assets . 'css/modal' . $this->pefix . '.css', null, $version );
+		wp_enqueue_style( $handle, $assets . 'css/modal' . $this->prefix . '.css', null, $version );
 	}
 
 	public function footer(): void {

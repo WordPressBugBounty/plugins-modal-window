@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 6.2.3
+Stable tag: 6.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,26 +15,25 @@ WordPress popup plugin for easily creating a popup and modal window with any kin
 
 Use the free WordPress popup plugin "Modal Window" to quickly and easily create informative popups. Add the text and media you need, insert shortcodes of forms and much more. Change the behavior of the display of modal windows depending on the user's actions on the page.
 
-The Modal Window is the unique tool for free use. With its help you can add bright information popup messages to the site, warn visitors about various promotions, display contact forms to increase the conversion of the resource. The WordPress popup plugin will allow you to set the data display in the new format.
+The Modal Window is a unique tool for free use. With its help, you can add bright information popup messages to the site, warn visitors about various promotions, or display contact forms to increase conversions. The plugin allows you to set the data display in a modern, interactive format.
 
-Create modal windows and insert any kind of content.
+Create modal windows and insert any kind of content, from simple text to complex layouts with columns and media.
 
 = Main features =
 
-The WordPress plugin Modal Window will help you quickly get the attention of visitors. Its functionality will make it possible to implement high-quality modal windows for any query.
+The WordPress plugin Modal Window will help you quickly get the attention of visitors. Its functionality makes it possible to implement high-quality modal windows for any query.
 
 * **Unlimited Modals:** Create as many modal windows as you need without restrictions.
 * **HTML Content Editor:** Easily add and format text, images, and other content within your modal windows using a built-in HTML editor.
-* **Modal Shortcodes:** Use shortcodes to insert modal windows into posts, pages, or widgets, making them versatile and easy to implement
-* **Place Any Kind of Content:** Insert text, images, videos, and other content types within your modal windows to deliver your message effectively.
-* **Modal Style:** Apply basic styling to your modal windows to match your site's design.
-* **Modal Location:** Set the position of your modal windows on the screen (e.g., center, top, bottom).
-* **Open Triggers:** Choose from various triggers to open modal windows, including click, auto, hover, exit, and scroll events.
-* **Basic Animations:** Utilize simple fade animation to enhance the appearance of your modal windows.
+* **Floating Button Trigger:** Create a stylish floating button to trigger your modal. Customize its position, icon, text, and add eye-catching animations (bounce, pulse, shake, etc.).
+* **Advanced Shortcodes:** Includes built-in shortcodes for Video (YouTube/Vimeo), iFrames, Buttons, Icons (Font Awesome 7+), and Column layouts (rows/columns).
+* **Open Triggers:** Choose from various triggers: Click, Auto (timer), Hover, Exit Intent, and Scroll events.
+* **Custom Styling:** Deeply customize Modal Titles, Close Buttons, Backgrounds, Shadows, and even the Scrollbar style to match your brand.
+* **Responsive Control:** Set different widths for mobile devices and hide modals on specific screen sizes (Mobile/Desktop).
+* **WCAG & Accessibility:** Improved compliance with ARIA attributes (aria-live, role="dialog") for better screen reader support.
 * **Overlay and Esc Key:** Allow users to close modal windows by clicking on the overlay or pressing the Esc key.
-* **Shortcode and Everywhere:** Control where your modals appear using shortcodes or set them to display across the entire site.
-* **Hide on Smaller Screens:** Option to hide modal windows on smaller screens, ensuring they do not disrupt mobile user experience.
-* **Hide on Larger Screens:** Option to hide modal windows on larger screens, providing control over where modals are shown.
+* **Import/Export:** Easily move your modal window settings between websites.
+* **Show Once (Cookies):** Control the frequency of display using cookies to avoid annoying returning visitors.
 
 --
 
@@ -42,7 +41,15 @@ Discover even **more features with the Pro version** of the Modal Window plugin,
 
 --
 
-The free Modal Window plugin is the best tool to create information pop-up blocks quickly and easy. It allows you to display any kind of content on the page. Add and edit text messages, shortcodes of various forms, images and other media files with its help.
+The free Modal Window plugin is the best tool to create information pop-up blocks quickly and easily. It allows you to display any kind of content on the page. Add and edit text messages, shortcodes of various forms, images, and other media files with its help.
+
+= Included Shortcodes =
+Maximize your modal content with these built-in shortcodes:
+* `[videoBox]` - Insert responsive YouTube or Vimeo videos.
+* `[iframeBox]` - Embed external web pages or interactive content.
+* `[buttonBox]` - Create beautiful "Link" or "Close Modal" buttons.
+* `[wow-icon]` - Add any of the 2000+ Font Awesome icons.
+* `[w-row]` & `[w-column]` - Create complex multi-column layouts easily.
 
 = Common use cases =
 The free version of the Modal Window plugin is versatile and can be used in various scenarios to enhance your website’s functionality and user engagement.
@@ -185,6 +192,10 @@ To solve this problem:
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+= 6.2.4 =
+* Fixed: function `shortcode` returns the wrong value.
+* Fixed: minor bugs with grammar.
+
 = 6.2.3 =
 * Updated: Font Awesome library upgraded to version **7.1**.
 * Updated: `wp-color-picker-alpha` to version **3.0.4**.
