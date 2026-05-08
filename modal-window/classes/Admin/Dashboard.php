@@ -76,7 +76,7 @@ class Dashboard {
 		if ( $page !== $hook ) {
 			return;
 		}
-		do_action( WOWP_Plugin::PREFIX . '_admin_load_assets' );
+		do_action( WOWP_Plugin::PREFIX . '_admin_load_assets' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 
 		$slug       = WOWP_Plugin::SLUG;
 		$version    = WOWP_Plugin::info( 'version' );
@@ -142,7 +142,7 @@ class Dashboard {
                     <a href="<?php echo esc_url( Link::add_new_item() ); ?>"
                        class="button button-primary"><?php esc_html_e( 'Add New', 'modal-window' ); ?>
                     </a>
-					<?php do_action( WOWP_Plugin::PREFIX . '_admin_header_links' ); ?>
+					<?php do_action( WOWP_Plugin::PREFIX . '_admin_header_links' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound ?>
                 </div>
             </div>
         </div>
@@ -202,7 +202,7 @@ class Dashboard {
 
 
 		if ( $file !== false ) {
-			$file = apply_filters( WOWP_Plugin::PREFIX . '_admin_filter_file', $file, $current );
+			$file = apply_filters( WOWP_Plugin::PREFIX . '_admin_filter_file', $file, $current ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 
 			$page_path = DashboardHelper::get_folder_path( 'pages' ) . '/' . $file;
 

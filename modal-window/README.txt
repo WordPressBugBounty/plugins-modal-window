@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 6.2.4
+Stable tag: 6.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -192,6 +192,11 @@ To solve this problem:
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+
+= 6.2.5 =
+* Fixed a minor bug with output tags
+* Fixed: a minor bug with code quality
+
 = 6.2.4 =
 * Fixed: function `shortcode` returns the wrong value.
 * Fixed: minor bugs with grammar.

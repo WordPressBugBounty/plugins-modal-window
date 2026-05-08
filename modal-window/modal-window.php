@@ -3,7 +3,7 @@
  *  Plugin Name:       Modal Window
  *  Plugin URI:        https://wordpress.org/plugin/modal-window/
  *  Description:       Create popups. Insert any content. Trigger on anything.
- *  Version:           6.2.4
+ *  Version:           6.2.5
  *  Author:            Wow-Company
  *  Author URI:        https://wow-estore.com/
  *  License:           GPL-2.0+
@@ -14,7 +14,7 @@
  *  Store URI:         https://wow-estore.com/
  *  Author Email:      hey@wow-company.com
  *  Plugin Menu:       Modal Window
- *  Rating URI:        https://wordpress.org/support/plugin/modal-window/reviews/?filter=5#new-post
+ *  Rating URI:        https://wordpress.org/support/plugin/modal-window/reviews/#new-post
  *  Support URI:       https://wordpress.org/support/plugin/modal-window/
  *  Item URI:          https://wow-estore.com/item/wow-modal-windows-pro/
  *  Documentation:     https://wow-estore.com/documentations/modal-window-documentation/
