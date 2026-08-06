@@ -46,7 +46,7 @@ class Conditions {
 	}
 
 	private static function show_once( $id, $param ): bool {
-		if ( $param['use_cookies'] !== 'yes' ) {
+		if ( ( $param['use_cookies'] ?? '' ) !== 'yes' ) {
 			return true;
 		}
 		$name = 'wow-modal-id-' . $id;

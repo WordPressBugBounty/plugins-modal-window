@@ -16,6 +16,7 @@ namespace ModalWindow;
 
 use ModalWindow\Admin\AdminActions;
 use ModalWindow\Admin\Dashboard;
+use ModalWindow\Admin\ManageCapabilities;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,20 +34,28 @@ class WOWP_Admin {
 	}
 
 	public function modal_window_preview_content(): void {
+		if ( ! current_user_can( ManageCapabilities::get_capability() ) ) {
+			wp_send_json_error( 'Forbidden' );
+		}
+
 		if ( empty( $_POST['security_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['security_nonce'] ) ),
 				WOWP_Plugin::PREFIX . '_nonce' ) ) {
 			wp_send_json_error( 'Invalid nonce' );
 			die();
 		}
 
-		if ( empty( $_POST['data'] ) ) {
-			return;
+		if ( empty( $_POST['data'] ) || ! isset( $_POST['form_data'] ) ) {
+			wp_send_json_error( 'No data' );
 		}
 
 		$content = do_shortcode( wp_unslash( $_POST['data'] ) );
 		parse_str( wp_unslash($_POST['form_data']), $output );
 
-		$modal_maker = new Modal_Maker( 'preview', $output['param'], $output['title'], $content );
+		if ( empty( $output['param'] ) || ! is_array( $output['param'] ) ) {
+			wp_send_json_error( 'No data' );
+		}
+
+		$modal_maker = new Modal_Maker( 'preview', $output['param'], $output['title'] ?? '', $content );
 		$modal       = $modal_maker->init();
 
 		$option_maker = new Script_Maker( 'preview', $output['param'] );
@@ -90,55 +99,7 @@ class WOWP_Admin {
 
 
 	private function sanitize_content( $content ) {
-		// Define a custom allowed HTML array including form elements
-		$allowed_html = array_merge(
-			wp_kses_allowed_html( 'post' ), // Allow all tags permitted by wp_kses_post
-			array(
-				'form'     => array(
-					'action' => true,
-					'method' => true,
-					'id'     => true,
-					'class'  => true,
-				),
-				'input'    => array(
-					'type'        => true,
-					'name'        => true,
-					'value'       => true,
-					'placeholder' => true,
-					'id'          => true,
-					'class'       => true,
-					'checked'     => true,
-				),
-				'textarea' => array(
-					'name'        => true,
-					'id'          => true,
-					'class'       => true,
-					'rows'        => true,
-					'cols'        => true,
-					'placeholder' => true,
-				),
-				'button'   => array(
-					'type'  => true,
-					'name'  => true,
-					'value' => true,
-					'id'    => true,
-					'class' => true,
-				),
-				'select'   => array(
-					'name'  => true,
-					'id'    => true,
-					'class' => true,
-				),
-				'option'   => array(
-					'value'    => true,
-					'selected' => true,
-				),
-			)
-		);
-
-		$sanitized_content = wp_kses( wp_encode_emoji( $content ), $allowed_html );
-
-		return $sanitized_content;
+		return wp_kses( wp_encode_emoji( $content ), WOWP_Plugin::allowed_html() );
 	}
 
 	public function sanitize_text( $text ): string {

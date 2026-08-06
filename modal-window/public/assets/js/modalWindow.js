@@ -51,6 +51,8 @@ jQuery(document).ready(function($) {
             const screen = $(window).width();
             const windowHeight = $(window).height();
             let lastFocusedElement;
+            let isOpen = false;
+            let inertElements = $();
 
             const videoSrc = checkVideo();
 
@@ -333,6 +335,8 @@ jQuery(document).ready(function($) {
                     return;
                 }
 
+                isOpen = true;
+
                 const speed = parseInt(settings.animation[1]);
 
                 if (settings.overlay) {
@@ -366,12 +370,17 @@ jQuery(document).ready(function($) {
                         $(content).focus();
                     }, 50);
 
-                    $('body').children().each(function () {
-                        if ($(this).find('.modal-window__content').length || $(this).hasClass('modal-window__content')) {
-                            return;
-                        }
-                        $(this).attr('inert', '');
-                    });
+                    if (settings.blockPage) {
+                        // Remember only what this modal made inert, so closing it never clears
+                        // the inert state owned by another modal or by the site itself.
+                        inertElements = $('body').children().filter(function () {
+                            if ($(this).find('.modal-window__content').length || $(this).hasClass('modal-window__content')) {
+                                return false;
+                            }
+                            return !$(this).is('[inert]');
+                        });
+                        inertElements.attr('inert', '');
+                    }
 
                     animate();
                     openActions();
@@ -540,11 +549,19 @@ jQuery(document).ready(function($) {
             }
 
             function closeModalWindow() {
+                // Close triggers are bound on init, so they fire even before the modal is shown.
+                // Without this guard Esc alone would run the close redirect.
+                if (!isOpen) {
+                    return;
+                }
+                isOpen = false;
+
                 let speed = parseInt(settings.animation[3]);
                 const animationType = settings.animation[2].split(':')[0];
                 const pieces = settings.animation[2].split(':');
 
-                $('[inert]').removeAttr('inert');
+                inertElements.removeAttr('inert');
+                inertElements = $();
                 if (lastFocusedElement) {
                     lastFocusedElement.focus();
                 }
@@ -612,7 +629,9 @@ jQuery(document).ready(function($) {
             }
 
             function closeByOverlay() {
-                if (settings.closeAction[0] === true) {
+                // The wrapper is fixed and covers the whole viewport. It may catch clicks only when
+                // it really is a barrier, otherwise it swallows every click on the page behind it.
+                if (settings.closeAction[0] === true && (settings.blockPage || settings.overlay)) {
                     $(wrapper).addClass('is-clickable');
                     $(wrapper).on('click', function (e) {
                         if (!$(e.target).closest('.modal-window__content').length) {

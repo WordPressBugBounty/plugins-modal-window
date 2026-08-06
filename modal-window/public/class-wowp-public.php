@@ -65,6 +65,11 @@ class WOWP_Public {
 		}
 
 		$param  = maybe_unserialize( $result->param );
+
+		if ( ! is_array( $param ) ) {
+			return '';
+		}
+
 		$walker = new Modal( $atts['id'], $param, $result->title );
 		$out    = $walker->init();
 
@@ -90,7 +95,8 @@ class WOWP_Public {
 			foreach ( $args as $id => $param ) {
 				$script = new Script( $id, $param );
 				$data['modal-window-' . absint( $id)] = $script->init();
-				if($param['button_type'] === '2' || $param['button_type'] === '3') {
+				$button_type = $param['button_type'] ?? '';
+				if ( $button_type === '2' || $button_type === '3' ) {
 					wp_enqueue_style( $handle . '-fontawesome', $url_fontawesome, null, '7.1' );
 				}
 			}
@@ -133,6 +139,9 @@ class WOWP_Public {
 
 		foreach ( $results as $result ) {
 			$param = maybe_unserialize( $result->param );
+			if ( ! is_array( $param ) ) {
+				continue;
+			}
 			if ( Display::init( $result->id, $param ) === true && Conditions::init( $result ) === true ) {
 				$args[ $result->id ] = $param;
 			}

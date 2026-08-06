@@ -30,7 +30,8 @@ class Display {
 	}
 
 	private static function can_abort_early( $id, $param ): bool {
-		return empty( $param ) || ! is_array( $param ) || empty( absint( $id ) );
+		return empty( $param ) || ! is_array( $param ) || empty( absint( $id ) )
+		       || empty( $param['show'] ) || ! is_array( $param['show'] );
 	}
 
 	private static function check_shows( $showParams, $param ): bool {

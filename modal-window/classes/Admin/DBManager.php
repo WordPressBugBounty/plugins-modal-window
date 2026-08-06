@@ -30,6 +30,16 @@ use ModalWindow\WOWP_Plugin;
 class DBManager {
 
 	/**
+	 * Rows already fetched during this request. check_display() reads every row and the
+	 * shortcode then asks for each one again, which used to cost one query per modal.
+	 */
+	private static array $cache = [];
+
+	public static function flush_cache(): void {
+		self::$cache = [];
+	}
+
+	/**
 	 * Create database table.
 	 */
 	public static function create( $columns ): void {
@@ -61,6 +71,7 @@ class DBManager {
 		$table = esc_sql( $wpdb->prefix . WOWP_Plugin::PREFIX );
 
 		$wpdb->insert( $table, $data, $data_formats ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		self::flush_cache();
 
 		return $wpdb->insert_id ?: false;
 	}
@@ -73,6 +84,7 @@ class DBManager {
 		$table = esc_sql( $wpdb->prefix . WOWP_Plugin::PREFIX );
 
 		$wpdb->update( $table, $data, $where, $data_formats ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		self::flush_cache();
 	}
 
 	/**
@@ -85,6 +97,8 @@ class DBManager {
 
 		global $wpdb;
 		$table = $wpdb->prefix . WOWP_Plugin::PREFIX;
+
+		self::flush_cache();
 
 		return $wpdb->delete( $table, [ 'id' => $id ], [ '%d' ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
@@ -109,6 +123,7 @@ class DBManager {
 		global $wpdb;
 		$table  = $wpdb->prefix . WOWP_Plugin::PREFIX;
 		$result = $wpdb->delete( $table, [ 'id' => $id ], [ '%d' ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		self::flush_cache();
 
 		if ( $result ) {
 			wp_safe_redirect( Link::remove_item() );
@@ -127,7 +142,15 @@ class DBManager {
 		$table  = esc_sql( $wpdb->prefix . WOWP_Plugin::PREFIX );
 		$result = $wpdb->get_results( "SELECT * FROM {$table} ORDER BY id ASC" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
-		return ( ! empty( $result ) && is_array( $result ) ) ? $result : false;
+		if ( empty( $result ) || ! is_array( $result ) ) {
+			return false;
+		}
+
+		foreach ( $result as $row ) {
+			self::$cache[ absint( $row->id ) ] = $row;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -137,10 +160,19 @@ class DBManager {
 		if ( empty( $id ) ) {
 			return false;
 		}
+
+		$id = absint( $id );
+
+		if ( array_key_exists( $id, self::$cache ) ) {
+			return self::$cache[ $id ];
+		}
+
 		global $wpdb;
 		$table = esc_sql( $wpdb->prefix . WOWP_Plugin::PREFIX );
 
-		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE id=%d", absint( $id ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		self::$cache[ $id ] = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE id=%d", $id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+		return self::$cache[ $id ];
 	}
 
 	/**

@@ -3,7 +3,7 @@
  *  Plugin Name:       Modal Window
  *  Plugin URI:        https://wordpress.org/plugin/modal-window/
  *  Description:       Create popups. Insert any content. Trigger on anything.
- *  Version:           6.2.5
+ *  Version:           6.3
  *  Author:            Wow-Company
  *  Author URI:        https://wow-estore.com/
  *  License:           GPL-2.0+
@@ -113,6 +113,43 @@ if ( ! class_exists( 'WOWP_Plugin' ) ) :
 			$plugin_data = get_file_data( __FILE__, $data, false );
 
 			return $plugin_data[ $show ] ?? '';
+		}
+
+		/**
+		 * Tags allowed inside the modal content.
+		 *
+		 * wp_kses_post() strips form, input, select and option, so the same extended set
+		 * has to be used both when the content is saved and when it is rendered.
+		 */
+		public static function allowed_html(): array {
+			return array_merge(
+				wp_kses_allowed_html( 'post' ),
+				[
+					'form'     => [ 'action' => true, 'method' => true, 'id' => true, 'class' => true ],
+					'input'    => [
+						'type'        => true,
+						'name'        => true,
+						'value'       => true,
+						'placeholder' => true,
+						'id'          => true,
+						'class'       => true,
+						'checked'     => true,
+						'required'    => true,
+					],
+					'textarea' => [
+						'name'        => true,
+						'id'          => true,
+						'class'       => true,
+						'rows'        => true,
+						'cols'        => true,
+						'placeholder' => true,
+						'required'    => true,
+					],
+					'button'   => [ 'type' => true, 'name' => true, 'value' => true, 'id' => true, 'class' => true, 'style' => true ],
+					'select'   => [ 'name' => true, 'id' => true, 'class' => true, 'required' => true ],
+					'option'   => [ 'value' => true, 'selected' => true ],
+				]
+			);
 		}
 
 		/**

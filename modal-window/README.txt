@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 6.2.5
+Stable tag: 6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,10 +188,25 @@ To solve this problem:
 
 == Upgrade Notice ==
 
+= 6.3 =
+Fixes a bug where a modal set to not block the page still made the whole page unclickable. If a modal has `Block page = No` and the overlay disabled, closing it by clicking outside no longer works — use the close button or Esc instead.
+
 = 5.0 =
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+
+= 6.3 =
+* Fixed: with `Block page = No` the modal no longer blocks the page — links and buttons behind it stay clickable. Most visible with the `Scrolled` trigger.
+* Fixed: close actions no longer fire before the modal has been shown, so pressing Esc on the page no longer runs the close redirect.
+* Fixed: forms, inputs and selects placed in the modal content are no longer stripped on the frontend, so the editor preview and the live site match.
+* Fixed: the left offset of the modal used the unit of the bottom offset. The editor preview used a wrong unit as well.
+* Fixed: closing a modal no longer clears the `inert` state set by another modal or by the theme.
+* Fixed: `aria-modal` is now `false` for popups that do not block the page.
+* Fixed: shortcode `videoBox` with an unknown source, and double escaped attributes in `iframeBox`.
+* Fixed: `Undefined array key` notices on PHP 8 for modals saved by older versions of the plugin.
+* Security: added a capability check to the modal preview request in the admin area.
+* Improved: modal rows are fetched once per request instead of one query per modal.
 
 = 6.2.5 =
 * Fixed a minor bug with output tags

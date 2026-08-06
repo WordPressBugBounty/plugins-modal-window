@@ -188,23 +188,23 @@ class Script {
 		$args  = [];
 
 		if ( ! empty( $param['include_modal_top'] ) ) {
-			$modal_top_unit         = $param['modal_top_unit'] === '%' ? 'vh' : 'px';
-			$args['--mw-inset-top'] = $param['modal_top'] . $modal_top_unit;
+			$modal_top_unit         = ( $param['modal_top_unit'] ?? '' ) === '%' ? 'vh' : 'px';
+			$args['--mw-inset-top'] = ( $param['modal_top'] ?? '0' ) . $modal_top_unit;
 		}
 
 		if ( ! empty( $param['include_modal_right'] ) ) {
-			$modal_right_unit         = $param['modal_right_unit'] === '%' ? '%' : 'px';
-			$args['--mw-inset-right'] = $param['modal_right'] . $modal_right_unit;
+			$modal_right_unit         = ( $param['modal_right_unit'] ?? '' ) === '%' ? '%' : 'px';
+			$args['--mw-inset-right'] = ( $param['modal_right'] ?? '0' ) . $modal_right_unit;
 		}
 
 		if ( ! empty( $param['include_modal_bottom'] ) ) {
-			$modal_bottom_unit         = $param['modal_bottom_unit'] === '%' ? 'vh' : 'px';
-			$args['--mw-inset-bottom'] = $param['modal_bottom'] . $modal_bottom_unit;
+			$modal_bottom_unit         = ( $param['modal_bottom_unit'] ?? '' ) === '%' ? 'vh' : 'px';
+			$args['--mw-inset-bottom'] = ( $param['modal_bottom'] ?? '0' ) . $modal_bottom_unit;
 		}
 
 		if ( ! empty( $param['include_modal_left'] ) ) {
-			$modal_left_unit         = $param['modal_bottom_unit'] === '%' ? '%' : 'px';
-			$args['--mw-inset-left'] = $param['modal_left'] . $modal_left_unit;
+			$modal_left_unit         = ( $param['modal_left_unit'] ?? '' ) === '%' ? '%' : 'px';
+			$args['--mw-inset-left'] = ( $param['modal_left'] ?? '0' ) . $modal_left_unit;
 		}
 
 		return $args;

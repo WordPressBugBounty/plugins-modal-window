@@ -26,10 +26,15 @@ class WOWP_Shortcodes {
 			return '';
 		}
 
+		$url = '';
 		if ( $atts['from'] === 'youtube' ) {
 			$url = 'https://www.youtube.com/embed/';
 		} elseif ( $atts['from'] === 'vimeo' ) {
 			$url = 'https://player.vimeo.com/video/';
+		}
+
+		if ( empty( $url ) ) {
+			return '';
 		}
 
 		return '<iframe width="' . absint( $atts['width'] ) . '" height="' . absint( $atts['height'] ) . '" src="' . esc_url( $url ) . esc_attr( $atts['id'] ) . '" allow="autoplay" frameborder="0" loading="lazy" allowfullscreen></iframe>';
@@ -93,8 +98,6 @@ class WOWP_Shortcodes {
 				if ( in_array( $attr_name, $allowed_attributes, true ) ) {
 					if ( 'style' === $attr_name ) {
 						$attr_value = $this->sanitize_style_attribute( $attr_value );
-					} else {
-						$attr_value = esc_attr( $attr_value );
 					}
 					$attr_string .= ' ' . esc_attr( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
 				}
@@ -109,7 +112,7 @@ class WOWP_Shortcodes {
 			$iframe .= ' class="' . esc_attr( $atts['class'] ) . '"';
 		}
 		if ( ! empty( $atts['style'] ) ) {
-			$iframe .= ' style="' . $this->sanitize_style_attribute( $atts['style'] ) . '"';
+			$iframe .= ' style="' . esc_attr( $this->sanitize_style_attribute( $atts['style'] ) ) . '"';
 		}
 		$iframe .= '></iframe>';
 
@@ -118,9 +121,8 @@ class WOWP_Shortcodes {
 
 	public function sanitize_style_attribute( $style ): ?string {
 		$style = preg_replace( '/expression|javascript|vbscript|data:/i', '', $style );
-		$style = preg_replace( '/[^a-zA-Z0-9:;.\s%-]/', '', $style );
 
-		return esc_attr( $style );
+		return preg_replace( '/[^a-zA-Z0-9:;.\s%-]/', '', $style );
 	}
 
 	public function shortcode_icon( $atts ): string {

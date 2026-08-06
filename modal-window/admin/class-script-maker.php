@@ -181,8 +181,8 @@ class Script_Maker {
 		}
 
 		if ( ! empty( $param['include_modal_left'] ) ) {
-			$modal_left_unit         = $param['modal_bottom_unit'] === '%' ? 'vh' : 'px';
-			$args['--mw-inset-left'] = $param['modal_left'] . $modal_left_unit;
+			$modal_left_unit         = ( $param['modal_left_unit'] ?? '' ) === '%' ? '%' : 'px';
+			$args['--mw-inset-left'] = ( $param['modal_left'] ?? '0' ) . $modal_left_unit;
 		}
 
 		return $args;
