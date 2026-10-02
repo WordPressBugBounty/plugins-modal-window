@@ -5,7 +5,7 @@ Tags: modal, modal window, modal popup, lightbox, popup
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 6.3
+Stable tag: 6.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -195,6 +195,8 @@ Fixes a bug where a modal set to not block the page still made the whole page un
 If you use the cache plugin, reset the cache completely.
 
 == Changelog ==
+= 6.3.1 =
+* Fixed: Option 'Block Page'
 
 = 6.3 =
 * Fixed: with `Block page = No` the modal no longer blocks the page — links and buttons behind it stay clickable. Most visible with the `Scrolled` trigger.

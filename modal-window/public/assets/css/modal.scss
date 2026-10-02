@@ -1,10 +1,11 @@
 // Check on live
 html.no-scroll {
   scrollbar-gutter: stable;
+  overflow: hidden !important;
 }
 
 body.no-scroll {
-  overflow-y: hidden;
+  overflow: hidden !important;
 }
 
 
